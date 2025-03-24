@@ -44,7 +44,8 @@ Project workflow (for any GitHub project) assuming that you have “forked” th
     1. Click on the PR tab on your GitHub fork page
     2. Choose to compare across forks
     3. Choose destination to PrincetonUniversity/SPECFEMPP at base branch 
-    4. Choose source to be <username>/issue-<issue number> 
-    5. Now, fill out the PR description and finally click “Create Pull request
+    4. Choose source to be username/issue-#issuenumber
+    5. Now, click “Create Pull request"
     6. You will be prompted to fill out the description about the PR
 7. The PR will now be reviewed by others and will eventually be merged, or you will be asked for some updates.
+8. While you wait for approval you can restart at 1.
