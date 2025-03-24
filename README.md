@@ -18,9 +18,9 @@ This repo is just for keeping track of notes, slides, etc., that are relevant fo
 - [Pull Requests](https://github.com/PrincetonUniversity/SPECFEMPP/pulls?q=is%3Apr+is%3Aopen+project%3APrincetonUniversity%2F48)
 
 
---
+---
 
-Project workflow (for any GitHub project) assuming that you have “forked” the repo:
+**Project workflow (for any GitHub project) assuming that you have “forked” the repo:**
 
 1. Sync your fork 
     1. On your GitHub SPECFEM fork, choose a base branch (e.g. PE)
