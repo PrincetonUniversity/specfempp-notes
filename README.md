@@ -33,19 +33,20 @@ Project workflow (for any GitHub project) assuming that you have “forked” th
         1. `git checkout <base-branch>`
         2. `git pull origin <base-branch>`
 3. Choose Issue to work on in the Project, e.g. #612 (Update the timescheme)
-4. Create branch to work on
+    1. Make sure to assign yourself to the issue!
+5. Create branch to work on
     1. `git checkout -b issue-<issue number> # e.g. issue-602`
-5. Make and commit changes
+6. Make and commit changes
     1. Make changes to files
     2. Stage changes: `git add <file you have worked on>`
     3. Commit changes: `git commit -m ‘Commit message (what you did)’`
     4. Upload changes: `git push origin issue-<issue number>`
-6. On Github make a pull request (PR) from your new branch to the base-branch in PrincetonUniversity/SPECFEMPP
+7. On Github make a pull request (PR) from your new branch to the base-branch in PrincetonUniversity/SPECFEMPP
     1. Click on the PR tab on your GitHub fork page
     2. Choose to compare across forks
     3. Choose destination to PrincetonUniversity/SPECFEMPP at base branch 
     4. Choose source to be username/issue-#issuenumber
     5. Now, click “Create Pull request"
     6. You will be prompted to fill out the description about the PR
-7. The PR will now be reviewed by others and will eventually be merged, or you will be asked for some updates.
-8. While you wait for approval you can restart at 1.
+8. The PR will now be reviewed by others and will eventually be merged, or you will be asked for some updates.
+9. While you wait for approval you can restart at 1.
