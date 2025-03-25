@@ -46,7 +46,8 @@ This repo is just for keeping track of notes, slides, etc., that are relevant fo
     2. Choose to compare across forks
     3. Choose destination to PrincetonUniversity/SPECFEMPP at base branch 
     4. Choose source to be username/issue-#issuenumber
-    5. Now, click “Create Pull request"
-    6. You will be prompted to fill out the description about the PR
+    5. Now, click “Create New Pull request"
+    6. You will be prompted to fill out the description about the PR after you which you can
+       confirm PR creation by clicking "Create PR"
 8. The PR will now be reviewed by others and will eventually be merged, or you will be asked for some updates.
 9. While you wait for approval you can restart at 1.
