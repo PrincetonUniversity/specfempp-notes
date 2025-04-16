@@ -113,7 +113,8 @@ Since you will be working with Adroit, you do not have to worry about these depe
 
 \item Create output folders\\
       {\bf mkdir -p OUTPUT\_FILES/results}\\
-      {\bf mkdir -p OUTPUT\_FILES/display}
+      {\bf mkdir -p OUTPUT\_FILES/display}\\
+      {\bf mkdir -p OUTPUT\_FILES/wavefield}
       
 \item Run the software
   \begin{itemize}
@@ -124,18 +125,30 @@ Since you will be working with Adroit, you do not have to worry about these depe
   \end{itemize}
 
 \item  Plotting results
+
+\noindent Further parameters are documented here:\\
+\phantom{ } \url{https://specfem2d-kokkos.readthedocs.io/en/devel/}
+
   \begin{enumerate}
     \item Seismograms (ASCII format) are stored in the folder {\bf OUTPUT\_FILES/results}. File names for the seismograms have the form: \\
         {\bf  <Network>.<Station>.S2.BX<Component>.semd}. \\
         The files have timestamp in the first and value in the second column, and can be read and plotted using Python or Matlab for example.
 
-    \item Wave field snapshots (ASCII format) are off by default by if activate stored in the folder {\bf OUTPUT\_FILES/display}. If the {\bf specfem\_config.yaml} is updated as follows
+    \item Wavefield images and full wavefield data (ASCII format) are off by default by if activate stored in the folder {\bf OUTPUT\_FILES/display}. If the {\bf specfem\_config.yaml} is updated as follows
+
+
+\newpage
 \begin{lstlisting}
 ...
 writer:
   seismogram:
     format: ascii
     directory: OUTPUT_FILES/results
+
+  wavefield:
+    directory: "OUTPUT_FILES/wavefield"
+    format: ASCII
+    time_interval: 1000
 
   display:
     format: PNG
@@ -145,14 +158,11 @@ writer:
     time-interval: 100
 ...
 \end{lstlisting}
-         These files have the format {\bf wavefield<timestamp>.png} and can be viewed using \url{myadroit.princeton.edu} and/or copied to your local machine using {\bf scp} or using VSCode remote development.
+         The image files have the format {\bf wavefield<timestamp>.png} and can be viewed using \url{myadroit.princeton.edu} and/or copied to your local machine using {\bf scp} or using VSCode remote development.
    
   \end{enumerate}
 
 \end{enumerate}
-
-\noindent Further parameters are documented here:\\
-\phantom{ } \url{https://specfem2d-kokkos.readthedocs.io/en/devel/}
 
 
 \section*{Assignment}
@@ -163,6 +173,7 @@ writer:
 
 \item Modify number of elements ({\bf NEX}, {\bf NEZ}) to see how the seismograms change for both SH and
 PSV forces. The "{\bf number of grids per wavelength}" on the screen output is an indication of the accuracy of the simulation.
+\item (bonus) Plot the wavefield using your own tools from {\bf OUTPUT\_FILES/wavefield}.
         
 \end{enumerate}
 
