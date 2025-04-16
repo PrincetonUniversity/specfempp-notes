@@ -16,6 +16,7 @@ parameters:
                           The orientation of the interface is horizontal with elastic domain on top.
 
   simulation-setup:
+    elastic-wave: "P_SV" # P_SV or SH
     ## quadrature setup
     quadrature:
       quadrature-type: GLL4
