@@ -43,3 +43,8 @@ just use the current branch as the target branch, like so for the `devel` branch
 ```bash
 git log --oneline --grep="Merge pull request" v0.3.0..devel | wc -l
 ```
+
+### Create a graph with the number of commits per day
+
+I let Claude create a script for me to analyze the git log and create a graph
+with the number of commits and PRs per week
