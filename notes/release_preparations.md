@@ -56,7 +56,7 @@ git log --pretty=format:'"%h","%an","%ad","%s"' > commit_history.csv
 
 Then run the script:
 ```bash
-python3 scripts/commit_analysis.py commit_history.csv [YYYYMMDD of last release] [optionally [YYYYMMDD of current date]]
+python scripts/commit_analysis.py path/to/SPECFEMPP/commit_history.csv --start-date 2025-02-18 --output ./analysis.png
 ```
 
 
