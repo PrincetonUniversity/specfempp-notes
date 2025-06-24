@@ -47,4 +47,17 @@ git log --oneline --grep="Merge pull request" v0.3.0..devel | wc -l
 ### Create a graph with the number of commits per day
 
 I let Claude create a script for me to analyze the git log and create a graph
-with the number of commits and PRs per week
+with the number of commits and PRs per week.
+
+First get the git log and save it to a file:
+```bash
+git log --pretty=format:'"%h","%an","%ad","%s"' > commit_history.csv
+```
+
+Then run the script:
+```bash
+python3 scripts/commit_analysis.py commit_history.csv [YYYYMMDD of last release] [optionally [YYYYMMDD of current date]]
+```
+
+
+

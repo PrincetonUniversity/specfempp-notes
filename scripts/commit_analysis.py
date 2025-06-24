@@ -1,228 +1,267 @@
 #!/usr/bin/env python3
 """
-Git Commit Log Analysis Script
-Analyzes commit data to create weekly bar charts for commits and pull requests.
+Git Commit Analysis Script
+
+Analyzes git commit data and creates weekly visualizations for:
+- All commits per week
+- Pull requests per week
 
 Usage:
-    python commit_analysis.py <csv_file> [start_date] [end_date]
-    
-    csv_file: Path to CSV file with commit data
-    start_date: Optional start date in YYYYMMDD format (inclusive)
-    end_date: Optional end date in YYYYMMDD format (inclusive)
-
-Example:
-    python commit_analysis.py commits.csv
-    python commit_analysis.py commits.csv 20250601
-    python commit_analysis.py commits.csv 20250601 20250630
+    python git_analyzer.py <input_file> [--start-date YYYY-MM-DD] [--end-date YYYY-MM-DD]
 """
 
 import pandas as pd
-import re
-import sys
-from datetime import datetime
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+from datetime import datetime, timedelta
+import argparse
+import sys
+from pathlib import Path
+from matplotlib.patches import Rectangle, FancyBboxPatch
+from matplotlib.ticker import MaxNLocator
+import numpy as np
 
-def parse_date_filter(date_str):
-    """Parse date string in YYYYMMDD format."""
-    if not date_str:
-        return None
-    try:
-        return datetime.strptime(date_str, '%Y%m%d')
-    except ValueError:
-        raise ValueError(f"Invalid date format '{date_str}'. Use YYYYMMDD format.")
+# Set font preferences
+plt.rcParams['font.family'] = ['Arial', 'sans-serif']
 
-def load_and_process_data(csv_file_path, start_date=None, end_date=None):
-    """Load CSV file and process commit data with optional date filtering."""
+
+def parse_git_data(file_path):
+    """
+    Parse the git commit data from CSV format.
     
-    # Read CSV file with pandas
+    Expected format: "hash","author","date","message"
+    """
     try:
-        # Read CSV without headers, assuming 4 columns: hash, author, date, message
-        df = pd.read_csv(csv_file_path, header=None, names=['hash', 'author', 'date_str', 'message'])
-        print(f"Loaded {len(df)} rows from CSV file")
-    except FileNotFoundError:
-        raise FileNotFoundError(f"CSV file '{csv_file_path}' not found.")
+        # Read the CSV file
+        df = pd.read_csv(file_path, header=None, 
+                        names=['hash', 'author', 'date', 'message'])
+        
+        # Parse the date column, handling mixed timezones by converting to UTC first
+        df['date'] = pd.to_datetime(df['date'], utc=True)
+        
+        # Convert to naive datetime (remove timezone info) to avoid comparison issues
+        df['date'] = df['date'].dt.tz_localize(None)
+        
+        # Sort by date
+        df = df.sort_values('date').reset_index(drop=True)
+        
+        return df
     except Exception as e:
-        raise Exception(f"Error reading CSV file: {e}")
-    
-    # Clean up quoted strings
-    df['hash'] = df['hash'].str.strip('"')
-    df['author'] = df['author'].str.strip('"')
-    df['date_str'] = df['date_str'].str.strip('"')
-    df['message'] = df['message'].str.strip('"')
-    
-    # Parse dates
-    def parse_git_date(date_str):
-        """Parse git date format and remove timezone."""
-        try:
-            # Remove timezone info (e.g., ' -0400')
-            date_clean = re.sub(r' [-+]\d{4}$', '', str(date_str))
-            return pd.to_datetime(date_clean, format='%a %b %d %H:%M:%S %Y')
-        except:
-            return pd.NaT
-    
-    df['date'] = df['date_str'].apply(parse_git_date)
-    
-    # Remove rows with invalid dates
-    initial_count = len(df)
-    df = df.dropna(subset=['date'])
-    if len(df) < initial_count:
-        print(f"Warning: Dropped {initial_count - len(df)} rows with invalid dates")
-    
-    # Apply date filtering
+        print(f"Error reading file {file_path}: {e}")
+        sys.exit(1)
+
+
+def filter_by_date_range(df, start_date=None, end_date=None):
+    """
+    Filter dataframe by optional start and end dates.
+    """
     if start_date:
-        df = df[df['date'].dt.date >= start_date.date()]
-        print(f"Filtered to dates >= {start_date.strftime('%Y-%m-%d')}: {len(df)} commits")
+        # Parse start_date and make it timezone-naive to match df['date']
+        start_date = pd.to_datetime(start_date).tz_localize(None)
+        df = df[df['date'] >= start_date]
     
     if end_date:
-        df = df[df['date'].dt.date <= end_date.date()]
-        print(f"Filtered to dates <= {end_date.strftime('%Y-%m-%d')}: {len(df)} commits")
-    
-    # Identify pull requests
-    pr_pattern = r'Merge pull request #(\d+)'
-    df['is_pr'] = df['message'].str.contains(pr_pattern, regex=True, na=False)
-    
-    # Add week start column (Monday of each week)
-    df['week_start'] = df['date'].dt.to_period('W-MON').dt.start_time
+        # Parse end_date and make it timezone-naive to match df['date']
+        end_date = pd.to_datetime(end_date).tz_localize(None)
+        df = df[df['date'] <= end_date]
     
     return df
 
-def analyze_weekly_data(df):
-    """Analyze commits and PRs by week using pandas groupby."""
-    
-    # Group by week and count total commits
-    weekly_commits = df.groupby('week_start').size()
-    
-    # Group by week and count PRs
-    weekly_prs = df[df['is_pr']].groupby('week_start').size()
-    
-    # Ensure all weeks are represented in both series
-    all_weeks = weekly_commits.index.union(weekly_prs.index)
-    weekly_commits = weekly_commits.reindex(all_weeks, fill_value=0)
-    weekly_prs = weekly_prs.reindex(all_weeks, fill_value=0)
-    
-    return weekly_commits, weekly_prs
 
-def create_plots(weekly_commits, weekly_prs):
-    """Create bar plots for commits and PRs side by side."""
-    
-    # Create subplots side by side
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
-    
-    # Create month labels with year format
-    dates = weekly_commits.index
-    month_positions = []
-    month_labels = []
-    
-    # Find the first occurrence of each month
-    seen_months = set()
-    for i, date in enumerate(dates):
-        month_year = (date.year, date.month)
-        if month_year not in seen_months:
-            seen_months.add(month_year)
-            month_positions.append(i)
-            # Format as "Jan '25"
-            month_labels.append(date.strftime("%b '%y"))
-    
-    # Plot commits
-    bars1 = ax1.bar(range(len(weekly_commits)), weekly_commits.values, color='steelblue', alpha=0.7)
-    ax1.set_ylabel('Commits/Week')
-    ax1.grid(axis='y', alpha=0.3)
-    
-    # Plot PRs
-    bars2 = ax2.bar(range(len(weekly_prs)), weekly_prs.values, color='darkgreen', alpha=0.7)
-    ax2.set_ylabel('PRs/Week')
-    ax2.grid(axis='y', alpha=0.3)
-    
-    # Set custom x-axis labels for both plots
-    for ax in [ax1, ax2]:
-        ax.set_xticks(month_positions)
-        ax.set_xticklabels(month_labels)
-        ax.tick_params(axis='x', rotation=0)
-        # Force y-axis to show only whole numbers
-        ax.yaxis.set_major_locator(plt.MaxNLocator(integer=True))
-    
-    plt.tight_layout()
-    return fig
-
-def print_summary(df, weekly_commits, weekly_prs):
-    """Print summary statistics."""
+def group_by_weeks(df):
+    """
+    Group commits by weeks (Monday to Sunday) and count entries.
+    Returns a series with week start dates as index and counts as values.
+    """
     if len(df) == 0:
-        print("No commits found matching the criteria.")
+        return pd.Series(dtype=int)
+    
+    # Make a copy to avoid modifying the original dataframe
+    df_copy = df.copy()
+    
+    # Ensure date column is datetime
+    if not pd.api.types.is_datetime64_any_dtype(df_copy['date']):
+        df_copy['date'] = pd.to_datetime(df_copy['date'])
+    
+    # Set the week to start on Monday
+    df_copy['week'] = df_copy['date'].dt.to_period('W-MON')
+    
+    # Count commits per week
+    weekly_counts = df_copy.groupby('week').size()
+    
+    # Convert period index to datetime (start of week)
+    weekly_counts.index = weekly_counts.index.to_timestamp()
+    
+    return weekly_counts
+
+
+def create_month_labels(date_range):
+    """
+    Create month labels in format "Mon\n'YY" for the 1st of each month.
+    """
+    if len(date_range) == 0:
+        return [], []
+    
+    start_date = date_range.min()
+    end_date = date_range.max()
+    
+    # Generate 1st of each month in the range
+    current = datetime(start_date.year, start_date.month, 1)
+    if current < start_date:
+        if current.month == 12:
+            current = current.replace(year=current.year + 1, month=1)
+        else:
+            current = current.replace(month=current.month + 1)
+    
+    labels = []
+    positions = []
+    
+    while current <= end_date:
+        labels.append(f"{current.strftime('%b')}\n'{current.strftime('%y')}")
+        positions.append(current)
+        
+        # Move to next month
+        if current.month == 12:
+            current = current.replace(year=current.year + 1, month=1)
+        else:
+            current = current.replace(month=current.month + 1)
+    
+    return positions, labels
+
+
+def plot_weekly_data(ax, weekly_data, ylabel, bar_color):
+    """
+    Plot weekly data as bars with custom month labels and rounded corners.
+    """
+    if len(weekly_data) == 0:
+        ax.set_ylabel(ylabel)
+        ax.text(0.5, 0.5, 'No data in date range', 
+                transform=ax.transAxes, ha='center', va='center')
         return
     
-    print(f"\nData Summary:")
-    print(f"Date range: {df['date'].min().strftime('%Y-%m-%d')} to {df['date'].max().strftime('%Y-%m-%d')}")
-    print(f"Total commits: {len(df)}")
-    print(f"Total PRs: {df['is_pr'].sum()}")
-    print(f"Unique authors: {df['author'].nunique()}")
-    print(f"Weeks with activity: {len(weekly_commits[weekly_commits > 0])}")
+    # Create bars with fixed corner radius (like CSS border-radius)
+    bar_width = 5
     
-    # Top authors
-    print(f"\nTop 5 authors by commit count:")
-    author_counts = df['author'].value_counts().head()
-    for author, count in author_counts.items():
-        print(f"  {author}: {count} commits")
+    max_height = np.max(weekly_data)
+    
+    # Use the square of the full width of bars to maintain aspect ratio
+    aspect_ratio = max_height/(bar_width+2)**2
+    
+    print(max_height, bar_width, aspect_ratio)
+    
+    for date, value in weekly_data.items():
+        # Create rounded rectangle with consistent corner radius
+        x = mdates.date2num(date)
+        
+        # Use fixed rounding parameters that create consistent corner appearance
+        # Similar to CSS border-radius behavior
+        rounding_size = 1.0 # Fixed moderate rounding
+        
+        fancy_rect = FancyBboxPatch((x - bar_width/2, 0), bar_width, value,
+                                   boxstyle=f"round,rounding_size={rounding_size},pad=0.1", 
+                                   facecolor=bar_color, alpha=1.0, 
+                                   edgecolor='white', linewidth=0.5,
+                                   mutation_aspect=aspect_ratio)
+        ax.add_patch(fancy_rect)
+    
+    # Set axis limits
+    if len(weekly_data) > 0:
+        x_min = mdates.date2num(weekly_data.index.min()) - 7
+        x_max = mdates.date2num(weekly_data.index.max()) + 7
+        ax.set_xlim(x_min, x_max)
+        ax.set_ylim(0, weekly_data.max() * 1.1)
+    
+    # Customize the plot
+    ax.set_ylabel(ylabel, fontsize=12)
+    ax.grid(True, alpha=0.3, axis='y')
+    
+    # Set y-axis to show only integers
+    ax.yaxis.set_major_locator(MaxNLocator(integer=True))
+    
+    # Create custom month labels - this will override any automatic ticks
+    positions, labels = create_month_labels(weekly_data.index)
+    if positions:
+        ax.set_xticks(positions)
+        ax.set_xticklabels(labels, fontsize=10)
+    else:
+        # Fallback to automatic monthly ticks if no custom labels
+        ax.xaxis.set_major_locator(mdates.MonthLocator())
+        ax.xaxis.set_major_formatter(mdates.DateFormatter('%b\n\'%y'))
+    
+    # Rotate x-axis labels for better readability
+    plt.setp(ax.xaxis.get_majorticklabels(), rotation=0, ha='center')
+
 
 def main():
-    # Parse command line arguments
-    if len(sys.argv) < 2:
-        print("Usage: python commit_analysis.py <csv_file> [start_date] [end_date]")
-        print("       start_date and end_date should be in YYYYMMDD format")
-        print("\nExample:")
-        print("       python commit_analysis.py commits.csv")
-        print("       python commit_analysis.py commits.csv 20250601")
-        print("       python commit_analysis.py commits.csv 20250601 20250630")
+    parser = argparse.ArgumentParser(description='Analyze git commit data and create weekly visualizations')
+    parser.add_argument('input_file', help='Path to the git data CSV file')
+    parser.add_argument('--start-date', help='Start date in YYYY-MM-DD format')
+    parser.add_argument('--end-date', help='End date in YYYY-MM-DD format')
+    parser.add_argument('--output', help='Output file path (optional)')
+    
+    args = parser.parse_args()
+    
+    # Validate input file
+    if not Path(args.input_file).exists():
+        print(f"Error: File {args.input_file} does not exist")
         sys.exit(1)
     
-    csv_file_path = sys.argv[1]
-    start_date = None
-    end_date = None
+    # Parse the git data
+    print("Reading git data...")
+    df = parse_git_data(args.input_file)
+    print(f"Loaded {len(df)} commits")
     
-    # Parse optional date arguments
-    try:
-        if len(sys.argv) >= 3:
-            start_date = parse_date_filter(sys.argv[2])
-            print(f"Start date filter: {start_date.strftime('%Y-%m-%d')}")
-        
-        if len(sys.argv) >= 4:
-            end_date = parse_date_filter(sys.argv[3])
-            print(f"End date filter: {end_date.strftime('%Y-%m-%d')}")
-            
-        if start_date and end_date and start_date > end_date:
-            raise ValueError("Start date must be before or equal to end date")
-            
-    except ValueError as e:
-        print(f"Error: {e}")
-        sys.exit(1)
+    # Filter by date range if specified
+    if args.start_date or args.end_date:
+        print(f"Filtering by date range: {args.start_date} to {args.end_date}")
+        df = filter_by_date_range(df, args.start_date, args.end_date)
+        print(f"Filtered to {len(df)} commits")
     
-    # Load and process the data
-    print(f"Loading commit data from '{csv_file_path}'...")
-    try:
-        df = load_and_process_data(csv_file_path, start_date, end_date)
-    except Exception as e:
-        print(f"Error: {e}")
-        sys.exit(1)
+    # Filter for PRs (commits with "Merge pull request" in message)
+    pr_df = df[df['message'].str.contains('Merge pull request', case=False, na=False)]
+    print(f"Found {len(pr_df)} pull request merges")
     
-    if len(df) == 0:
-        print("No commits found matching the criteria.")
-        sys.exit(1)
+    # Group by weeks
+    all_commits_weekly = group_by_weeks(df)
+    pr_weekly = group_by_weeks(pr_df)
     
-    # Analyze weekly data
-    print("Analyzing weekly patterns...")
-    weekly_commits, weekly_prs = analyze_weekly_data(df)
+    # Create the plot with reduced figure size
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 3))
     
-    # Print summary
-    print_summary(df, weekly_commits, weekly_prs)
+    # GitHub's actual light versions of green and blue
+    github_light_green = '#57d193'  # GitHub's light green (lighter version of #238636)
+    github_light_blue = '#54aeff'   # GitHub's light blue (lighter version of #0969da)
     
-    # Create and show plots
-    print("Creating plots...")
-    fig = create_plots(weekly_commits, weekly_prs)
-    plt.show()
+    # Plot all commits (no title)
+    plot_weekly_data(ax1, all_commits_weekly, 
+                    'Commits/Week', github_light_green)
     
-    # Save the plot
-    output_filename = f"weekly_git_activity_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
-    fig.savefig(output_filename, dpi=300, bbox_inches='tight')
-    print(f"Plot saved as '{output_filename}'")
+    # Plot PRs (no title)
+    plot_weekly_data(ax2, pr_weekly, 
+                    'PRs/Week', github_light_blue)
+    
+    # Adjust layout
+    plt.tight_layout()
+    
+    # Save or show the plot
+    if args.output:
+        plt.savefig(args.output, dpi=300, bbox_inches='tight')
+        print(f"Plot saved to {args.output}")
+    else:
+        plt.show()
+    
+    # Print summary statistics
+    print("\n=== Summary Statistics ===")
+    print(f"Date range: {df['date'].min().strftime('%Y-%m-%d')} to {df['date'].max().strftime('%Y-%m-%d')}")
+    print(f"Total commits: {len(df)}")
+    print(f"Total PRs: {len(pr_df)}")
+    print(f"Average commits per week: {all_commits_weekly.mean():.1f}")
+    print(f"Average PRs per week: {pr_weekly.mean():.1f}")
+    if len(all_commits_weekly) > 0:
+        print(f"Max commits in a week: {all_commits_weekly.max()}")
+    if len(pr_weekly) > 0:
+        print(f"Max PRs in a week: {pr_weekly.max()}")
+
 
 if __name__ == "__main__":
     main()
