@@ -49,17 +49,20 @@ git log --oneline --grep="Merge pull request" v0.3.0..devel | wc -l
 
 I let claude create a script for me to analyze the git log and create a graph
 with the number of commits and PRs per week, but it was not good enough. I had 
-to tweak it a bit to get the output to match the Github style. 
+to tweak it a bit to get the output to match the Github style.
 
-First, get the oneline `git log` and save it to a file:
+Make sure that main contains the latest changes that you want to include in the
+release. Then, get the oneline `git log` and save it to a file:
 ```bash
 git log <prev_release_tag>..main --pretty=format:'"%h","%an","%ad","%s"' > commit_history.csv
 ```
 
-Then run the script:
+After that, you can run the script to analyze the commit history and create a plot
+with the number of commits and PRs per week:
 ```bash
 python scripts/commit_analysis.py path/to/SPECFEMPP/commit_history.csv --output ./analysis.png
 ```
+
 
 ### Creation of simulation GIFs for the release
 
