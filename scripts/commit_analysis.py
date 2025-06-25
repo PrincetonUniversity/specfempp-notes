@@ -232,13 +232,15 @@ def main():
     github_light_green = '#57d193'  # GitHub's light green (lighter version of #238636)
     github_light_blue = '#54aeff'   # GitHub's light blue (lighter version of #0969da)
     
-    # Plot all commits (no title)
+    # Plot all commits with title showing total count
     plot_weekly_data(ax1, all_commits_weekly, 
                     'Commits/Week', github_light_green)
+    ax1.set_title(f'Total Commits: {len(df)}', loc='left', fontsize=10, pad=5)
     
-    # Plot PRs (no title)
+    # Plot PRs with title showing total count
     plot_weekly_data(ax2, pr_weekly, 
                     'PRs/Week', github_light_blue)
+    ax2.set_title(f'Total PRs: {len(pr_df)}', loc='left', fontsize=10, pad=5)
     
     # Adjust layout
     plt.tight_layout()

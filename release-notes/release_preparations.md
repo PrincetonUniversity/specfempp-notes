@@ -51,14 +51,14 @@ I let claude create a script for me to analyze the git log and create a graph
 with the number of commits and PRs per week, but it was not good enough. I had 
 to tweak it a bit to get the output to match the Github style. 
 
-First get the git log and save it to a file:
+First, get the oneline `git log` and save it to a file:
 ```bash
-git log --pretty=format:'"%h","%an","%ad","%s"' > commit_history.csv
+git log <prev_release_tag>..main --pretty=format:'"%h","%an","%ad","%s"' > commit_history.csv
 ```
 
 Then run the script:
 ```bash
-python scripts/commit_analysis.py path/to/SPECFEMPP/commit_history.csv --start-date 2025-02-18 --output ./analysis.png
+python scripts/commit_analysis.py path/to/SPECFEMPP/commit_history.csv --output ./analysis.png
 ```
 
 ### Creation of simulation GIFs for the release
