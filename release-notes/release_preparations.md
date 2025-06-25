@@ -22,28 +22,6 @@ For some releases you will want to add some examples (e.g, GIF of a simulation,
 etc.) and explain the most important changes in more detail. You can only really
 do this manually.
 
-## Create Statistics sections
-
-Total commits between the last release and the current one, total number of
-```bash
-git log --oneline <previous release tag>..<target branch> | wc -l
-```
-
-An actual command would look like this for the `devel` branch:
-```bash
-git log --oneline v0.3.0..devel | wc -l
-```
-
-To get the total number of PRs going into the release, we just need to filter the results from above total number of issues
-```bash
-git log --oneline --grep="Merge pull request" <previous release tag>..<target branch> | wc -l
-```
-In reality since often we'll do this prior to the release, you can
-just use the current branch as the target branch, like so for the `devel` branch:
-```bash
-git log --oneline --grep="Merge pull request" v0.3.0..devel | wc -l
-```
-
 
 ## Create a graph with the number of commits/PRs per week
 
