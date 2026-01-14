@@ -41,7 +41,7 @@ with the number of commits and PRs per week:
 python scripts/commit_analysis.py path/to/SPECFEMPP/commit_history.csv --output ./analysis.png
 ```
 
-### Creation of simulation MP4 videos for the release
+## Creation of simulation MP4 videos for the release
 
 Note that these instructions are used to create 4K videos (7680x4320) from `PNG`
 files generated during a simulation. It will automatically put black (change
@@ -64,7 +64,7 @@ ffmpeg \
   output.mp4
 ```
 
-#### Create a GIF from the MP4 video
+### Create a GIF from the MP4 video
 
 ```bash
 ffmpeg -i marmousi.mp4 \
@@ -78,7 +78,7 @@ automatically adjusts the height to maintain the aspect ratio. FPS is set to 24.
 So if the original video is 8 seconds long with also FPS=24, the resulting GIF
 will be 1 second long (8/8=1).
 
-### Creation of simulation GIFs for the release
+## Creation of simulation GIFs for the release
 
 For the release, we will often include some simulation GIFs to showcase the
 changes. The simulations will be run with the
