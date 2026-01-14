@@ -41,6 +41,42 @@ with the number of commits and PRs per week:
 python scripts/commit_analysis.py path/to/SPECFEMPP/commit_history.csv --output ./analysis.png
 ```
 
+### Creation of simulation MP4 videos for the release
+
+Note that these instructions are used to create 4K videos (7680x4320) from `PNG`
+files generated during a simulation. It will automatically put black (change
+`vf` option color for other colors) to fit 4K aspect ratio from the input PNGs.
+The `PNG` files are created by setting the
+`simulation-mode.forward.writer.display` section in the `specfem_config.yaml` to
+generate `PNG`. 
+
+```bash
+ffmpeg \
+  -framerate 24 \
+  -pattern_type glob -i 'path/to/cookbook/OUTPUT_FILES/display/wavefield*.png' \
+  -c:v libx264 \
+  -profile:v main \
+  -level 4.1 \
+  -pix_fmt yuv420p 
+  -crf 23 \
+  -movflags +faststart \
+  -vf "scale='iw*min(1,min(7680/iw,4320/ih))':'ih*min(1,min(7680/iw,4320/ih))',pad=7680:4320:(7680-iw)/2:(4320-ih)/2:color=black" \
+  output.mp4
+```
+
+#### Create a GIF from the MP4 video
+
+```bash
+ffmpeg -i marmousi.mp4 \
+  -vf "setpts=0.125*PTS,fps=24,scale=720:-1,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" \
+  marmousi.gif
+```
+
+Important options are `setpts=0.125*PTS` which speeds up the video by 8x
+(1/0.125=8) and `scale=720:-1` which sets the width to 720 pixels and
+automatically adjusts the height to maintain the aspect ratio. FPS is set to 24.
+So if the original video is 8 seconds long with also FPS=24, the resulting GIF
+will be 1 second long (8/8=1).
 
 ### Creation of simulation GIFs for the release
 
