@@ -27,15 +27,15 @@ Cartesian.
 For problems with large contrasts in physical properties, **non-conforming mesh
 support** via a Discontinuous Galerkin approach allows different element sizes
 on either side of an interface. This enables the code to choose larger timesteps
-and drastically improve perfomance.
+and drastically improve performance.
 
 <p align="center" width="95%">
-<img width="33%" alt="Conforming Bathymetry" src="images/bathymetry_unmod.png"><img width="33%" alt="Non-Conforming Bathymetry" src="images/bathymetry_mod.png"><img width="33%" alt="Simulation" src="images/fluid-solid-nonconforming.gif"></br>
-<i>Left</i>: Confirming mesh with bathymetry. <i>Center</i>: Non-Conforming Mesh. <i>Right</i>: Associated Non-conforming simulation.
+<img width="33%" alt="Conforming Bathymetry" src="images/bathymetry_unmod.png"><img width="33%" alt="Non-Conforming Bathymetry" src="images/bathymetry_mod.png"><img width="33%" alt="Simulation" src="images/fluid-solid-nonconforming.gif"><br>
+<i>Left</i>: Conforming mesh with bathymetry. <i>Center</i>: Non-Conforming Mesh. <i>Right</i>: Associated Non-conforming simulation.
 The <i>conforming</i> simulation is part of Pipatprathanporn et al., 2024 (<a href="https://doi.org/10.1093/gji/ggae238">DOI</a>).
-</br>
+<br>
 <img width="75%" alt="Seismogram" src="images/seismogram.png">
-</br>Seismograms for conforming and nonconforming DG simulation as well as associated error.
+<br>Seismograms for conforming and nonconforming DG simulation as well as associated error.
 </p>
 
 
@@ -48,7 +48,7 @@ speedup** over SPECFEM2D.
 
 
 <p align="center" width="95%">
-<img width="45%" alt="CPU Performance Comparison" src="images/acoustic-elastic-cpu.png"><img width="45%" alt="GPU Performance Comparison" src="images/acoustic-elastic-gpu.png"></br>
+<img width="45%" alt="CPU Performance Comparison" src="images/acoustic-elastic-cpu.png"><img width="45%" alt="GPU Performance Comparison" src="images/acoustic-elastic-gpu.png"><br>
 Performance comparison between SPECFEM2D Fortran and SPECFEM++ for CPU (<i>left</i>) and GPU (<i>right</i>).
 </p>
 
@@ -62,9 +62,9 @@ illustrates the rotational wavefield alongside displacement — something not
 possible in the original SPECFEM.
 
 <p align="center" width="95%">
-<img width="90%" alt="Marmousi Simulation" src="images/marmousi.gif"></br>
+<img width="90%" alt="Marmousi Simulation" src="images/marmousi.gif"><br>
 Wave propagation due to an isotropic, explosive source in the complex Marmousi model. Water (acoustic) layer on top and a complex, solid layer below with Stacey Boundary conditions.
-<img width="90%" alt="Cosserat Simulation" src="images/cosserat.gif"></br>
+<img width="90%" alt="Cosserat Simulation" src="images/cosserat.gif"><br>
 Wave propagation in a homogeneous Cosserat medium with Stacey boundary conditions on all sides. <i>Left</i>: Magnitude of the displacement component. <i>Right</i>: Rotational (spin) component.
 </p>
 
@@ -76,8 +76,7 @@ NVIDIA H100 GPUs, with results on a live [review
 dashboard](https://tigress-web.princeton.edu/~TROMP/specfempp-review-panel/).
 The API documentation now includes the actual implemented equations, and
 cookbooks cover everything from basic homogeneous media to non-conforming
-fluid-solid interfaces. **Python bindings** allow scripting and automation via
-`pip install`.
+fluid-solid interfaces.
 
 
 ## What's Next
