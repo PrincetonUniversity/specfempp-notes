@@ -1,0 +1,153 @@
+\ProvidesPackage{mycommands}
+
+% Better Math letters
+\DeclareRobustCommand{\rchi}{{\mathpalette\irchi\relax}}
+\newcommand{\irchi}[2]{\raisebox{\depth}{$#1\chi$}}
+
+% laboratory and material points
+\def\pointM{{\mathscr{M}}}
+\def\pointS{{\mathscr{S}}}
+
+\def\scrL{{\mathscr{L}}}
+\def\bfscrE{{\mathbf{\mathscr{E}}}}
+
+% boldsymbols
+\def\sfzero{{\mathsf{0}}}
+\def\bfzero{{\mathbf{0}}}
+\def\sfnabla{{\mathsf{\nabla}}}
+\def\scrL{{\mathscr{L}}}
+\def\scrN{{\mathscr{N}}}
+\def\scrS{{\mathscr{S}}}
+\def\scrD{{\mathscr{D}}}
+\newcommand{\bfomega}{\mbox{\boldmath $\bf \omega$}}
+\newcommand{\bfsigma}{\mbox{\boldmath $\bf \sigma$}}
+\newcommand{\bftau}{\mbox{\boldmath $\bf \tau$}}
+\newcommand{\bfeta}{\mbox{\boldmath $\bf \eta$}}
+\newcommand{\bftheta}{\mbox{\boldmath $\bf \theta$}}
+\newcommand{\bflambda}{\mbox{\boldmath $\bf \lambda$}}
+\newcommand{\bfphi}{\mbox{\boldmath $\bf \phi$}}
+\newcommand{\bfpsi}{\mbox{\boldmath $\bf \psi$}}
+\newcommand{\bfxi}{\mbox{\boldmath $\bf \xi$}}
+\newcommand{\bfnu}{\mbox{\boldmath $\bf \nu$}}
+\newcommand{\bfepsilon}{\mbox{\boldmath $\bf \epsilon$}}
+\newcommand{\bfGamma}{\mbox{\boldmath $\bf \Gamma$}}
+\newcommand{\bfvarepsilon}{\mbox{\boldmath $\bf \varepsilon$}}
+\newcommand{\sftau}{\mbox{${\sf \tau}$}}
+\newcommand{\sfLambda}{\mbox{${\sf \Lambda}$}}
+\newcommand{\sfDelta}{\mbox{${\sf \Delta}$}}
+\newcommand{\sfOmega}{\mbox{${\sf \Omega}$}}
+\newcommand{\sfGamma}{\mbox{${\sf \Gamma}$}}
+\newcommand{\sfQ}{\mbox{${\sf Q}$}}
+\newcommand{\sfZ}{\mbox{${\sf Z}$}}
+\newcommand{\sfV}{\mbox{${\sf V}$}}
+\newcommand{\sfH}{\mbox{${\sf H}$}}
+\newcommand{\sfX}{\mbox{${\sf X}$}}
+\newcommand{\sfD}{\mbox{${\sf D}$}}
+\newcommand{\bfOmega}{\mbox{\boldmath $\bf \Omega$}}
+\newcommand{\bfPhi}{\mbox{\boldmath $\bf \Phi$}}
+\newcommand{\bfPsi}{\mbox{\boldmath $\bf \Psi$}}
+\newcommand{\bfLambda}{\mbox{\boldmath $\bf \Lambda$}}
+\newcommand{\sfPhi}{\mbox{${\sf \Phi}$}}
+\newcommand{\bfnabla}{\mbox{\boldmath $\bf \nabla$}}
+\newcommand{\bfXi}{\mbox{\boldmath $\bf \Xi$}}
+\newcommand{\bfgamma}{\mbox{\boldmath $\bf \gamma$}}
+\newcommand{\bfDelta}{\mbox{\boldmath $\bf \Delta$}}
+
+% Roman d for integrations
+\def\rmd{{\mathrm{d}}}
+\def\rmD{{\mathrm{D}}}
+
+% triple dot product
+\newcommand{\tdot}{\,.\hspace{-0.98 mm}\raise.6ex\hbox{.}
+                   \hspace{-0.98 mm}\raise1.2ex\hbox{.}\,}
+
+% bold sans serif
+\def\sfa{{\textbf{\textsf{a}}}}
+\def\sfb{{\textbf{\textsf{b}}}}
+\def\sfc{{\textbf{\textsf{c}}}}
+\def\sfd{{\textbf{\textsf{d}}}}
+\def\sfe{{\textbf{\textsf{e}}}}
+\def\sff{{\textbf{\textsf{f}}}}
+\def\sfg{{\textbf{\textsf{g}}}}
+\def\sfh{{\textbf{\textsf{h}}}}
+\def\sfl{{\textbf{\textsf{l}}}}
+\def\sfi{{\textbf{\textsf{i}}}}
+\def\sfI{{\textbf{\textsf{I}}}}
+\def\sfj{{\textbf{\textsf{j}}}}
+\def\sfk{{\textbf{\textsf{k}}}}
+\def\sfm{{\textbf{\textsf{m}}}}
+\def\sfn{{\textbf{\textsf{n}}}}
+\def\sfp{{\textbf{\textsf{p}}}}
+\def\sfq{{\textbf{\textsf{q}}}}
+\def\sfr{{\textbf{\textsf{r}}}}
+\def\sfs{{\textbf{\textsf{s}}}}
+\def\sft{{\textbf{\textsf{t}}}}
+\def\sfu{{\textbf{\textsf{u}}}}
+\def\sfv{{\textbf{\textsf{v}}}}
+\def\sfw{{\textbf{\textsf{w}}}}
+\def\sfx{{\textbf{\textsf{x}}}}
+\def\sfy{{\textbf{\textsf{y}}}}
+\def\sfz{{\textbf{\textsf{z}}}}
+
+% bold lowercase Roman
+\def\bfa{{\mathbf{a}}}
+\def\bfb{{\mathbf{b}}}
+\def\bfc{{\mathbf{c}}}
+\def\bfd{{\mathbf{d}}}
+\def\bfe{{\mathbf{e}}}
+\def\bff{{\mathbf{f}}}
+\def\bfg{{\mathbf{g}}}
+\def\bfh{{\mathbf{h}}}
+\def\bfi{{\mathbf{i}}}
+\def\bfj{{\mathbf{j}}}
+\def\bfk{{\mathbf{k}}}
+\def\bfl{{\mathbf{l}}}
+\def\bfm{{\mathbf{m}}}
+\def\bfn{{\mathbf{n}}}
+\def\bfp{{\mathbf{p}}}
+\def\bfq{{\mathbf{q}}}
+\def\bfr{{\mathbf{r}}}
+\def\bfs{{\mathbf{s}}}
+\def\bft{{\mathbf{t}}}
+\def\bfu{{\mathbf{u}}}
+\def\bfv{{\mathbf{v}}}
+\def\bfw{{\mathbf{w}}}
+\def\bfx{{\mathbf{x}}}
+\def\bfy{{\mathbf{y}}}
+\def\bfz{{\mathbf{z}}}
+
+% bold uppercase Roman
+\def\bfA{{\mathbf{A}}}
+\def\bfB{{\mathbf{B}}}
+\def\bfC{{\mathbf{C}}}
+\def\bfD{{\mathbf{D}}}
+\def\bfE{{\mathbf{E}}}
+\def\bfF{{\mathbf{F}}}
+\def\bfG{{\mathbf{G}}}
+\def\bfH{{\mathbf{H}}}
+\def\bfI{{\mathbf{I}}}
+\def\bfJ{{\mathbf{J}}}
+\def\bfK{{\mathbf{K}}}
+\def\bfL{{\mathbf{L}}}
+\def\bfM{{\mathbf{M}}}
+\def\bfN{{\mathbf{N}}}
+\def\bfP{{\mathbf{P}}}
+\def\bfQ{{\mathbf{Q}}}
+\def\bfS{{\mathbf{S}}}
+\def\bfT{{\mathbf{T}}}
+\def\bfU{{\mathbf{U}}}
+\def\bfV{{\mathbf{V}}}
+\def\bfX{{\mathbf{X}}}
+\def\bfZ{{\mathbf{Z}}}
+
+
+% ------ added by samarth
+\newcommand{\tr}[1]{\textcolor[rgb]{1,0,0}{#1}}
+\newcommand{\tb}[1]{\textcolor[rgb]{0,0,1}{#1}}
+\newcommand{\tg}[1]{\textcolor[rgb]{0,1,0}{#1}}
+%
+\newcommand{\oneby}[1]{\frac{1}{#1}}
+\newcommand{\pdif}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\pdiff}[2]{\frac{\partial^2 #1}{\partial {#2}^2}}
+\newcommand{\pdiffxy}[3]{\frac{\partial^2 #1}{\partial #2 \partial #3}}
+\renewcommand{\vec}[1]{\boldsymbol{#1}}
