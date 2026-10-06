@@ -1,173 +1,176 @@
-% --------------------
-% Packages
-% -------------------
+% =====================================================================
+%  AY27 RSE RENEWAL PROPOSAL  --  SPECFEM++  (2027-2029)
+%  PI: Jeroen Tromp (sole PI).  2 RSEs x 2 years, 30% RC co-funding.
+%  DRAFT -- language/style modeled on the funded 2024 RSE proposal.
+%  Flags: \note{...} marks open items / numbers to verify before submit.
+%  Narrative limit: 3 pages (references excluded) + 1-page budget + PI CV.
+% =====================================================================
 \documentclass[11pt,letter]{article}
 \usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
-%\usepackage[utf8x]{inputenc}
-%\usepackage[T1]{fontenc}
 \usepackage{times}
-\usepackage[english]{babel} % Swedish translations
-%
-\usepackage[linkcolor=black,colorlinks=true,linkcolor=Blue,citecolor=Maroon, urlcolor=gray]{hyperref} 
+\usepackage[english]{babel}
+\usepackage[linkcolor=black,colorlinks=true,linkcolor=Blue,citecolor=Maroon, urlcolor=gray]{hyperref}
 \urlstyle{same}
-\usepackage{enumitem} % Includes lists
+\usepackage{enumitem}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{mathrsfs}
-
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{subcaption}
-
 \captionsetup{
-    width=0.9\textwidth, % width of caption is 90% of current textwidth
-    labelfont=bf,        % the label, e.g. figure 12, is bold
-    font={small,it},          % the whole caption text (label + content) is small
+    width=0.95\textwidth,
+    labelfont=bf,
+    font={small,it},
 }
 \usepackage{natbib}
-
 \usepackage[usenames,dvipsnames]{color}
-\usepackage{wrapfig} 
-\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{wrapfig}
 \graphicspath{{figures/}}
 
 \usepackage{tikz}
 \newcommand{\ExternalLink}{%
-    \tikz[x=1.2ex, y=1.2ex, baseline=-0.05ex]{% 
+    \tikz[x=1.2ex, y=1.2ex, baseline=-0.05ex]{%
         \begin{scope}[x=1ex, y=1ex]
-            \clip (-0.1,-0.1) 
-                --++ (-0, 1.2) 
-                --++ (0.6, 0) 
-                --++ (0, -0.6) 
-                --++ (0.6, 0) 
-                --++ (0, -1);
-            \path[draw, 
-                line width = 0.5, 
-                rounded corners=0.5] 
+            \clip (-0.1,-0.1)
+                --++ (-0, 1.2) --++ (0.6, 0) --++ (0, -0.6)
+                --++ (0.6, 0) --++ (0, -1);
+            \path[draw, line width = 0.5, rounded corners=0.5]
                 (0,0) rectangle (1,1);
         \end{scope}
-        \path[draw, line width = 0.5] (0.5, 0.5) 
-            -- (1, 1);
-        \path[draw, line width = 0.5] (0.6, 1) 
-            -- (1, 1) -- (1, 0.6);
+        \path[draw, line width = 0.5] (0.5, 0.5) -- (1, 1);
+        \path[draw, line width = 0.5] (0.6, 1) -- (1, 1) -- (1, 0.6);
         }
     }
-
-
-
-\SetKw{KwBy}{by}
 
 \usepackage{mycommands}
 \usepackage{shorthands}
 
-% comments between authors
-\newcommand{\tojeroen}[1]{\textbf{\green{*** Jeroen: #1 ***}}}
-\newcommand{\torest}[1]{\textbf{\blue{*** Rest: #1 ***}}}
+% --- draft-only flag for open items / numbers to verify ---------------
+\newcommand{\note}[1]{\textbf{\textcolor{Red}{[#1]}}}
 
-%-----------------------
-% Set information such as title, author, etc.
-%-----------------------
-\title{RSE PROPOSAL}
-\author{Jeroen Tromp}
-\date\today
+% tighten section spacing to help fit 3 pages
+\usepackage{titlesec}
+\titlespacing\section{0pt}{6pt plus 2pt minus 2pt}{2pt plus 1pt minus 1pt}
+\titlespacing\subsection{0pt}{4pt plus 2pt minus 2pt}{1pt}
 
-%-----------------------
-% Change Header and Footer
-%-----------------------
-\usepackage{fancyhdr}
-% \pagestyle{fancy}
-% \fancyhf{}% Clear header/footer
-% \fancyhead[L]{ORFEUS Software Development Grant Application}
-% \fancyhead[R]{P. Makus}
-% \fancyfoot[L]{}
-% \fancyfoot[R]{\thepage}
-% \renewcommand{\headrulewidth}{0.4pt}
-% \renewcommand{\footrulewidth}{0.4pt}
-
-%-----------------------
-% No widows
-%-----------------------
 \widowpenalty10000
 \clubpenalty10000
 
 \begin{document}
-%\thispagestyle{empty} % Suppress header and Footer on the first page
-\noindent {\Large{\textbf{SPECFEM++: A Kokkos-based Spectral-Element Library for Wave Propagation Modeling and Imaging}}}
-\vspace{-0.5em}\newline
+
+\noindent {\large{\textbf{SPECFEM++: Sustaining and Extending a Performance-Portable Spectral-Element Library for Wave Propagation Modeling and Imaging}}}
+\vspace{-0.4em}\newline
+\noindent {\small PI: Jeroen Tromp \quad\textbullet\quad RSE Renewal (AY27) \quad\textbullet\quad Two RSEs, two years (July 2027--June 2029)}
+\vspace{-0.2em}\newline
 \noindent\rule{\textwidth}{0.4pt}
 
 \paragraph{Summary}
+We request renewal of RSE co-funding to continue the development of \SFPP, the \software{Kokkos}/\software{C++} rewrite of the \SF\ software suite for simulating seismic wave propagation and performing adjoint tomography. Over the past two years, a three-RSE team transformed a single-developer proof-of-concept into a released, benchmarked, and community-adopted code that is on track to reach feature parity with \SFG\ by the start of this award. Where the previous award \emph{built the foundation}, this renewal \emph{uses it}: we will deliver science beyond the reach of legacy \SF---a frequency-domain solver---while hardening the production code and growing the community that will ultimately sustain it. We request 30\% university co-funding for two continuing RSEs for two years; the PI will provide the remaining 70\% \note{name Princeton match source---BLOCKING budget item}. The foundational build genuinely required three RSEs; that phase is complete, so this is a right-sized, two-RSE consolidation, not a retreat.
 
-We propose to create a \software{Kokkos} version of the \SF\ software suite, which is used for simulating wave propagation and tomographic imaging. The resulting software will be hardware-agnostic and can be utilized beyond the exascale. Our team consists of one current RSE and two new RSEs, for which we are requesting 50\% university support (i.e., 1 FTE). This project presents an opportunity for the Princeton Research Computing community to gain expertise in programming models that focus on leveraging modern architectures. The RSEs graduating from this project will be well-equipped to support the increasing need for modernizing scientific codes across the university.
+% =====================================================================
+\section{Research Context}
+% =====================================================================
+Simulating how seismic waves propagate through the Earth underpins problems ranging from earthquake and exploration seismology to planetary science, helioseismology, non-destructive testing, and medical imaging. For a quarter-century the community's standard tool for this task has been the \SF\ suite (\href{https://specfem.org/}{specfem.org \ExternalLink}), an open-source code for forward modeling and adjoint tomography of 2D and 3D acoustic, (an)elastic, gravity, and ultrasound wave propagation. It accounts for attenuation, rotation, self-gravitation, bathymetry, topography, ellipticity, and fluid--solid interfaces, and it scales from laboratory to global problems.
 
-\section{SPECFEM}
+The scientific frontier is now a coupled, planetary-scale ``Earth simulator'': a single framework in which seismic, ocean, and atmospheric wavefields interact with self-gravitation and rotation, and which can be \emph{inverted} with adjoint methods to image the planet at unprecedented resolution. This ambition is what sets \SFPP's requirements. \SFPP\ is the modern successor to the incumbent standard---a complete \software{C++}/\software{Kokkos} rewrite of \SFTWOD, \SFTHREED, and \SFG\ designed to carry the \SF\ community onto today's heterogeneous, exascale-class hardware and to express physics the original code cannot.
 
-The \SF\ software suite  (\href{https://specfem.org/}{specfem.org \ExternalLink})  is an open-source tool for simulating wave propagation and generating tomographic images. It can model 2D and 3D acoustic, (an)elastic, gravity, and ultrasound wave propagation while taking into account complexities such as attenuation, solid-body rotation, self-gravitation, bathymetry, topography, ellipticity, and fluid-solid and solid-solid interfaces. The software has adjoint-state capabilities and is used in various fields such as exploration seismology, earthquake seismology, helioseismology, planetary seismology, nondestructive testing, and medicine. Since its inception in 1999, over 230 publications have used the \software{SPECFEM} software suite, and the number of citations has exceeded 2500 per year (Figure~\ref{fig:citations}) with an h-index of 84 (\href{https://scholar.google.com/citations?user=bvjzHdUAAAAJ}{Google Scholar \ExternalLink}). The software has garnered over 600 stars on GitHub. \SF\ is written in \software{Fortran90} with support for \software{CUDA} and \software{OpenMP}.
+% =====================================================================
+\section{Research Impact and Software Opportunity}
+% =====================================================================
+The impact of the software is exceptional and easy to quantify. Since its inception in 1999, over 230 publications have used \SF, its annual citations exceed 2{,}500 per year, and its software h-index is 84 (\href{https://scholar.google.com/citations?user=bvjzHdUAAAAJ}{Google Scholar \ExternalLink}); it is used across six application domains and has garnered more than 600 GitHub stars. This footprint is reinforced by the PI's own standing in the field \note{PI record: $\sim$30{,}500 citations, h-index 78---confirm/round for CV}.
 
-\begin{figure}[!h]
-    \centering
-    \includegraphics[width=0.85\textwidth, trim={.5cm .5cm 3.1cm .5cm}, clip]{figures/citations.png}
-    \hspace{2.5em}
-	\caption{We collected \SF\ publications on \href{https://scholar.google.com/citations?user=bvjzHdUAAAAJ}{Google Scholar} and counted their annual citations.}
-	\label{fig:citations}
-\end{figure}
+Legacy \SF\ is written in \software{Fortran90} with separate \software{CUDA} and \software{OpenMP} paths, and this design cannot follow the science in two ways at once. First, it cannot ride modern heterogeneous hardware without maintaining divergent, architecture-specific codebases. \software{Kokkos}~\citep{Trott2022} resolves this: it is a \software{C++} performance-portability library that lets developers ``write once, run anywhere''---mapping a single implementation onto \software{CUDA}, \software{HIP}, \software{SYCL}, and \software{OpenMP} backends---so the team can focus on physics and algorithms rather than hardware. The approach is proven at Princeton: \software{Kokkos} ported the \software{Athena++} magnetohydrodynamics code to GPUs with performance matching the native \software{CUDA} implementation~\citep{Stone2020,Grete2021}. Second, the legacy architecture cannot readily express the new physics the field now needs. \SFPP's modern \software{C++} design removes both limits at once.
 
-\section{Kokkos}
+\emph{Feature parity with \SFG\ is the launch pad, not the goal.} Parity makes \SFPP\ an adoptable successor to the code the community already relies on, and it is on track to be reached by \note{$\sim$summer 2027}---the start of this award. The opportunity for 2027--2029 therefore lies \emph{beyond} legacy \SF: the modern architecture already enables physics the \software{Fortran} code could not (semi-discontinuous Galerkin methods, Cosserat media), and it opens the way to a frequency-domain solver and to the coupled Earth-simulator physics above. Domain scientists supply the physics; what turns it into performant, maintainable, community-usable software is professional research software engineering. That is the need this proposal addresses.
 
-\software{Kokkos} \citep{Trott2022} is a \software{C++} performance portability library that allows developers to write code without worrying about the underlying computing hardware. Thus, they can focus on underlying physics and algorithms. \software{Kokkos} uses \software{C++} templates to map different parallel execution patterns to target programming models like \software{CUDA}, \software{HIP}, \software{SYCL}, and \software{OpenMP}. Unlike other performance portability libraries such as \software{RAJA}, \software{OpenACC}, and \software{OpenMP}, \software{Kokkos} provides data management abstractions that maximize cache reuse, leading to better performance. \software{Kokkos} has been used to modernize several scientific codes, such as \software{LAAMPS}, \software{Trilinos}, and \software{PETSc}. At Princeton University, \software{Kokkos} has successfully helped to port a magnetohydrodynamics code developed by former PICSciE director Jim Stone to GPUs \citep{Stone2020}. The results show that Kokkos-enabled \software{Athena++} \citep{Grete2021} can achieve similar performance on CPUs while achieving a 30\% speedup compared to the native CUDA implementation on GPUs.
+% =====================================================================
+\section{Research Software Engineering}
+% =====================================================================
 
-A major focus of the \software{Kokkos} team is fostering community engagement and increasing software usability based on user feedback. We have witnessed clear benefits in this regard, as the \software{Kokkos} team fast-tracked float SIMD vectorization support, a feature we requested, which should enable us to achieve better performance on CPUs beyond the current \software{SPECFEM} capabilities. Our team is in active contact with the \software{Kokkos} core developers, Christian Trott, Daniel Arndt, Damien Lebrun-Grandie, and Evan Harvey, through Slack and email. We presented our work at the \software{Kokkos} User Group Meeting in 2023.
+This is professional software-engineering work, not a science postdoc's side project. It demands \software{Kokkos} performance portability, \software{C++} template metaprogramming (the mechanism by which \SFPP\ generates specialized, high-performance kernels at compile time while exposing a single interface), cross-architecture continuous integration, release engineering, and rigorous benchmarking---skills that are the core of the RSE profession and difficult to sustain through rotating students or postdocs.
 
-\section{Research To Date}
+The past two years proved that a \emph{coordinated team} with formal project management is equally essential. A single RSE could not have delivered the current code; a team working with issue tracking, code review, continuous integration, and a shared roadmap did. Just as important, the division of labor between the RSE manager and the PI has become crystal clear---there is never a question of who works on what, which lets the scientists set direction while the RSEs own execution. This working model is precisely what the RSE program exists to provide, and it is why delivery accelerated once the team was in place.
 
-Our goal is to develop a \SFPP\ library that provides an interface for developing spectral-element solvers in an architecture-independent manner. Currently, one RSE, Rohit Kakodkar, is the sole developer. He has laid the groundwork for integrating the core packages of \SF\ into a single interface using template metaprogramming. For simplicity, the focus has been on 2D wave propagation and imaging. The flexibility of dynamic code generation using templates at compile time has allowed him to develop a single interface while maintaining the performance of the original code base. However, a team of software engineers will be required to extend this proof-of-concept framework to simulate 3D wave propagation and perform tomographic inversions at high resolution and on a global scale.
+% =====================================================================
+\section{Previous Results}
+% =====================================================================
+In the roughly 22 months since the two new RSEs were hired (November 2024), the team turned a single-developer proof-of-concept into a released, benchmarked, and community-adopted code---and pushed past the original plan.
 
-\section{Proposed Research}
+\noindent\textbf{Delivered on plan.} 2D and 3D forward--adjoint solvers are in place; the code has reached roughly \note{80\%} parity toward \SFG\ and is on track for full parity by the award start. Six public releases (v0.1.0$\rightarrow$v0.6.0) have shipped at an accelerating cadence since the team formed~\citep{SPECFEMPP2026}.
 
-This proposal requests support for two additional research software engineers (RSE1 and RSE2), complementing RSE0 (Kakodkar). We request 50\% funding for RSE1 and RSE2 (1~FTE) for three years. The PI will provide the remaining 50\% of the funding. The project is divided into three stages as follows.
+\noindent\textbf{Performance.} Benchmarks (Fig.~\ref{fig:perf}) show the 2D solver is already \textbf{1.43--2.15$\times$ faster} than \SFTWOD\ on CPU and 1.08--1.58$\times$ faster on GPU; the 3D solver already runs at \textbf{$\sim$60\% of native \SFTHREED\ with no performance tuning}. Closing the remaining gap to parity is therefore a tractable engineering target, not a research risk.
 
-\subsection{Stage 1: Development of forward-adjoint solvers (September 2024--August 2025)}
+\noindent\textbf{Beyond plan.} The flexible architecture has already enabled new science the legacy code could not support: a 2D semi-discontinuous Galerkin method~\citep{DG2026} and wave propagation in Cosserat (micropolar) media~\citep{Cosserat2026}, each the subject of a manuscript in preparation (and, for the former, a thesis chapter), with a reference benchmark already merged.
+
+\noindent\textbf{Community traction.} The repository has grown to \note{61 stars / 22 forks}; the project received its first \emph{unprompted} external pull request before its two-year anniversary; and active users now include two undergraduates, one graduate student, and one postdoc. The team has run two developer hackathons to onboard new contributors to the codebase.
+
+The lesson for this renewal is specific: the foundational build genuinely required a three-RSE team, and that phase is now done. The next two years are a disciplined, two-RSE consolidation and extension.
+
+% =====================================================================
+\section{Proposed Work and Deliverables}
+% =====================================================================
+With parity to \SFG\ reached at the award's start, the renewal shifts from catching up to legacy \SF\ to surpassing it. Work is organized around three primary deliverables for two RSEs over two years (Fig.~\ref{fig:gantt}).
 
 \begin{figure}[!ht]
-    \includegraphics[width=0.975\textwidth]{figures/stage1.png}
-    \caption{GANTT chart of the tasks for the three RSEs planned for the first year.}
-    \label{fig:stage1}
-\end{figure}
-
-The project's first stage (Figure~\ref{fig:stage1}) will focus on developing a forward-adjoint solver for 2D and 3D seismic wave propagation. On completion, the solver should provide 75--80\% of the functionality primarily used by the \SF\ community, i.e., functionally required to compute tomographic models. This will enable us to onboard the \SF\ community (users and developers) to the \SFPP\ framework and gather feedback on the usability and performance of the framework. The GANTT chart in Figure~\ref{fig:stage1} provides a high-level overview of this stage's planned tasks and the distribution of work between the RSEs. The goal is to familiarize the two new RSEs with the \SFPP\ framework and have them independently contribute to developing the 3D solver.
-
-\subsection{Stage 2: Support for global tomography (September 2025--April 2026)}
-
-
-\begin{figure}[!h] 
-    \includegraphics[width=0.8\textwidth]{figures/stage2.png}
-        \caption{GANTT chart of the tasks for the three RSEs planned for the second year.}
-    \label{fig:stage2}
-\end{figure}
-
-
-The second stage of the project (Figure~\ref{fig:stage2}) will provide support for simulating seismic wave propagation on a global scale. Such simulations require additional features to incorporate the effects of Earth's curvature, rotation, gravity, and ocean load. Additionally, computing global-scale tomographic models will require extending the framework to run across multiple nodes using \software{MPI}. While the current \SF\ packages provide \software{MPI} support through direct \software{MPI} library calls, we would also like to explore using \software{PETSc} (i.e., \software{DMplex} vectors) to manage the distribution/communication of the mesh across nodes using \software{MPI}. This approach has proven successful in spectral-element libraries like \software{libCEED} \citep{Abdelfattah2021}. Lastly, combining recent developments from our group, such as source encoding \citep{Tromp2019, Bachmann2020, Cui2023} and Green’s function databases \citep{Sawade2024}, with the \SFPP\ framework will enable us to compute global-scale tomographic models efficiently. On completion, the solver should provide 90--95\% of the functionality of the original \SF\ code base.
-
-\subsection{Stage 3: Extension beyond current \software{SPECFEM} capabilities (May 2026--May 2027)}
-
-\begin{figure}[!hb]
     \centering
-    \includegraphics[width=\textwidth]{figures/stage3.png}
-    \caption{GANTT chart of the tasks for the three RSEs planned for the third year.}
-    \label{fig:stage3}
+    \includegraphics[width=0.98\textwidth]{proposed_gantt.png}
+    \caption{Proposed two-year work plan (July 2027--June 2029). D1 (frequency-domain solver) is led by one RSE; D2 (global-scale physics and maintenance) by the other; D3 (new physics with scientists and adoption) is shared. Milestones M0--M4 align to release and capability completions; stretch items are opportunistic Year-2 targets.}
+    \label{fig:gantt}
 \end{figure}
 
-The third stage of the project (Figure~\ref{fig:stage3}) has two main goals.
-First, we will polish the product further based on community and user feedback and improve user-friendliness so that students or less seismology-oriented research groups can adopt the software. This step involves building an active community, making the interface consistent and intuitive, requiring as few human operations as possible, and adding step-by-step guides to configure \SF\ easily. We have been collaborating with people from geodynamics, mineral physics, and geochemistry, and they all have a certain degree of need for seismic wave simulation and tomography. Just making \SF\ more user-friendly can significantly increase its potential audience. 
-Second, extend the capability of \SF\ to facilitate the latest scientific development, including but not limited to model order reduction \citep{Hawkins2023}, wavefield compression \citep{Boehm2016}, frequency domain solver \citep{Gharti2023}, and automatic mesh layer detection. These developments require more effort than standard \SF\ features but will have major impacts when successfully implemented.
+\vspace{-0.4em}
+\begin{description}[leftmargin=1.3em, itemsep=1pt, topsep=1pt]
+\item[\textnormal{\textbf{D1 --- Frequency-domain solver (primary).}}] Build on the existing implicit/static-solver line (implicit Newmark time integration, \software{Belos}/\software{Trilinos} iterative solvers) toward a production frequency-domain capability~\citep{Gharti2023}---a capability legacy \SF\ lacks and one directly useful for inversion.
+\item[\textnormal{\textbf{D2 --- Maintain and harden the 3D/global solver (primary).}}] Post-parity production work: performance tuning to close the remaining $\sim$0.6$\times\rightarrow$1$\times$ gap, robustness, bug-fixing, regression benchmarking, and user support for the now-adoptable global solver.
+\item[\textnormal{\textbf{D3 --- Grow adoption and enable new physics with scientists (shared, primary).}}] Documentation, tutorials, onboarding, and release engineering (v0.7$\rightarrow$v1.0); and a sustained RSE partnership that brings domain scientists' new methods (continuing the Galerkin and Cosserat work, plus further physics) into production and keeps them maintainable. This is the core RSE need.
+\end{description}
 
+\noindent\textbf{Stretch targets (listed, not promised).} Model-order reduction~\citep{Hawkins2023}, wavefield compression~\citep{Boehm2016}, additional couplings (ocean/atmosphere/gravity)~\citep{Gharti2023}, and automatic mesh-layer detection. Preliminary work exists for several of these, and personnel are in place for some; the RSEs' role is to carry proof-of-concept results into production software.
 
+% =====================================================================
+\section{Future Impact and Sustainability}
+% =====================================================================
+Legacy \SF\ has been sustained for decades by a small community of researcher-maintainers with no dedicated maintenance funding. The same self-sustaining model can carry \SFPP---but only once it is a \emph{viable alternative}, which in practice means 95--100\% feature parity with \SFG\ so that researchers will adopt it and, in turn, maintain it. The code is roughly \note{80\%} of the way there; reaching the threshold at the award's start is what makes community maintenance possible, and the renewal's role is to consolidate that threshold, keep the code scientifically alive at the frontier, and grow the contributor community around it.
 
+This is precisely the phase that traditional grant mechanisms do not cover. Agencies such as the NSF and consortia such as CIG fund software \emph{creation}, but there is no sustained mechanism to fund the transition to a living, community-owned code. Institutional RSE co-funding fills exactly that gap. Beyond the immediate project, \SFPP\ is positioned to be the open-source computational core of the coupled Earth-simulator research program---a strong basis for future external funding---while the undergraduates, graduate student, and postdoc already contributing become the next generation of maintainers. The RSEs, in turn, graduate from this project equipped to modernize other scientific codes across Princeton, extending the program's impact well beyond seismology.
 
+% =====================================================================
 \newpage
+\section*{Budget (one page)}
+% =====================================================================
+\noindent\textbf{Requested co-funding and effort.} We request \textbf{30\% co-funding of salary and benefits for two full-time, continuing RSEs} for \textbf{two years} (July 1, 2027--June 30, 2029). The PI will provide the remaining 70\%.
+\note{State FTE precisely once appointment levels are set; total costs vary by appointment level---contact Research Computing before submission to size the budget (the call encourages this).}
 
+\vspace{0.4em}
+\noindent\textbf{Additional funding source(s) (the 70\% match).} \note{BLOCKING: name a concrete Princeton-accessible source for the 70\% match (e.g.\ existing PI grants, department/PICSciE, CIG, or discretionary funds). The match is NOT the pending ERC program. Confirm the exact source and amount before submission.}
+
+\vspace{0.4em}
+\noindent\textbf{RSE continuity.} The two RSEs funded under this renewal are the \emph{same} engineers who built the current code; the third (foundational) RSE rolls off at the end of the previous award. Continuity means no ramp-up cost and immediate productivity against the deliverables above.
+
+\vspace{0.4em}
+\noindent\textbf{Attachment.} A biographical sketch / CV for the PI (Jeroen Tromp) is appended.
+
+\vspace{0.6em}
+\noindent{\small\note{Draft placeholder budget table---replace with Research Computing's figures once appointment levels and the match source are confirmed.}}
+
+\begin{center}
+\small
+\begin{tabular}{lcccc}
+\hline
+ & RSE-1 & RSE-2 & \textbf{Total/yr} & \textbf{2-yr total} \\
+\hline
+Salary + benefits (per RSE) & \note{\$---} & \note{\$---} & \note{\$---} & \note{\$---} \\
+RC co-funding (30\%)        & \note{\$---} & \note{\$---} & \note{\$---} & \note{\$---} \\
+PI match (70\%)             & \note{\$---} & \note{\$---} & \note{\$---} & \note{\$---} \\
+\hline
+\end{tabular}
+\end{center}
+
+% =====================================================================
+\newpage
 \bibliographystyle{abbrv}
 \bibliography{bibliography}
-
+% =====================================================================
 
 \end{document}

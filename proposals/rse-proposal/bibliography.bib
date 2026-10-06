@@ -1,175 +1,117 @@
+% =====================================================================
+%  Bibliography for the AY27 SPECFEM++ RSE renewal proposal (2027-2029).
+%  Reuses entries from the funded 2024 proposal; adds SPECFEM++ releases
+%  and in-prep manuscripts.  NOTE (draft): entries flagged [VERIFY] need
+%  final citation details before submission.
+% =====================================================================
 
-@misc{Abdelfattah2021,
-    author = {Abdelfattah, Ahmad and
-                Barra, Valeria and
-                Beams, Natalie and
-                Brown, Jed and
-                Camier, Jean-Sylvain and
-                Dobrev, Veselin and
-                Dudouit, Yohann and
-                Ghaffari, Leila and
-                Kolev, Tzanio and
-                Medina, David and
-                Pazner, Will and
-                Ratnayaka, Thilina and
-                Thompson, Jeremy L and
-                Tomov, Stanimire},
-    title        = {libCEED User Manual},
-    month        = JUL,
-    year         = 2021,
-    publisher    = {Zenodo},
-    version      = {0.9.0},
-    doi          = {10.5281/zenodo.5077489},
+% ---------------------------------------------------------------------
+%  SPECFEM++ software + in-prep manuscripts (new, [VERIFY] before submit)
+% ---------------------------------------------------------------------
+@misc{SPECFEMPP2026,
+    author       = {Kakodkar, Rohit and {SPECFEM++ developers}},
+    title        = {{SPECFEM++: A Kokkos-based spectral-element library for
+                    wave propagation and imaging (v0.6.0)}},
+    year         = 2026,
+    howpublished = {\url{https://github.com/PrincetonUniversity/SPECFEMPP}},
+    note         = {Open-source releases v0.1.0--v0.6.0; [VERIFY] Zenodo DOI}
 }
 
-@article{Bachmann2020,
-    author = {Bachmann, Etienne and Tromp, Jeroen},
-    title = "{Source encoding for viscoacoustic ultrasound computed tomographya)}",
-    journal = {The Journal of the Acoustical Society of America},
-    volume = {147},
-    number = {5},
-    pages = {3221-3235},
-    year = {2020},
-    month = {05},
-    doi = {10.1121/10.0001191},
+@misc{Cosserat2026,
+    author = {{SPECFEM++ team}},
+    title  = {{Spectral-element modeling of wave propagation in Cosserat
+              (micropolar) media with SPECFEM++}},
+    year   = 2026,
+    note   = {Manuscript in preparation; reference benchmark merged. [VERIFY]}
 }
 
-@article{Boehm2016,
-    volume = {81},
-    number = {6},
-    month = {nov},
-    year = {2016},
-    author = {Boehm, Christian and Hanzich,  Mauricio and Puente, Josep de la and Fichtner, Andreas},
-    title = {Wavefield compression for adjoint methods in full-waveform inversion},
-    journal = {{GEOPHYSICS}},
-    doi = {10.1190/geo2015-0653.1}
+@misc{DG2026,
+    author = {{SPECFEM++ team}},
+    title  = {{A semi-discontinuous Galerkin spectral-element method in
+              SPECFEM++}},
+    year   = 2026,
+    note   = {Manuscript in preparation / thesis chapter. [VERIFY]}
 }
 
+% ---------------------------------------------------------------------
+%  Reused from the funded 2024 proposal
+% ---------------------------------------------------------------------
+@article{Trott2022,
+  author={Trott, Christian R. and Lebrun-Grandié, Damien and Arndt, Daniel and Ciesko, Jan and Dang, Vinh and Ellingwood, Nathan and Gayatri, Rahulkumar and Harvey, Evan and Hollman, Daisy S. and Ibanez, Dan and Liber, Nevin and Madsen, Jonathan and Miles, Jeff and Poliakoff, David and Powell, Amy and Rajamanickam, Sivasankaran and Simberg, Mikael and Sunderland, Dan and Turcksin, Bruno and Wilke, Jeremiah},
+  journal={IEEE Transactions on Parallel and Distributed Systems},
+  title={Kokkos 3: Programming Model Extensions for the Exascale Era},
+  year={2022}, volume={33}, number={4}, pages={805-817},
+  doi={10.1109/TPDS.2021.3097283}}
 
-@article{Cui2023,
-    author = {Cui, Congyue and Bachmann, Etienne and Peter, Daniel and Liu, Zhaolun and Tromp, Jeroen},
-    title = "{Source-encoded waveform inversion in the Northern Hemisphere}",
-    journal = {Geophysical Journal International},
-    volume = {235},
-    number = {3},
-    pages = {2305-2322},
-    year = {2023},
-    month = {09},
-    doi = {10.1093/gji/ggad363},
-}
+@article{Stone2020,
+    doi = {10.3847/1538-4365/ab929b}, year = {2020}, month = {jun},
+    publisher = {The American Astronomical Society},
+    volume = {249}, number = {1}, pages = {4},
+    author = {James M. Stone and Kengo Tomida and Christopher J. White and Kyle G. Felker},
+    title = {The Athena++ Adaptive Mesh Refinement Framework: Design and Magnetohydrodynamic Solvers},
+    journal = {The Astrophysical Journal Supplement Series}}
 
+@ARTICLE{Grete2021,
+  author={Grete, Philipp and Glines, Forrest W. and O'Shea, Brian W.},
+  journal={IEEE Transactions on Parallel and Distributed Systems},
+  title={K-Athena: A Performance Portable Structured Grid Finite Volume Magnetohydrodynamics Code},
+  year={2021}, volume={32}, number={1}, pages={85-97},
+  doi={10.1109/TPDS.2020.3010016}}
 
-@article{Diederichs2022,
-    title = {HiPACE++: A portable, 3D quasi-static particle-in-cell code},
-    journal = {Computer Physics Communications},
-    volume = {278},
-    pages = {108421},
-    year = {2022},
-    doi = {10.1016/j.cpc.2022.108421},
-    author = {S. Diederichs and C. Benedetti and A. Huebl and R. Lehe and A. Myers and A. Sinn and J.-L. Vay and W. Zhang and M. Thévenet},
-}
-
-
-@article{Dubey2022,
-    title = {Flash-X: A multiphysics simulation software instrument},
-    journal = {SoftwareX},
-    volume = {19},
-    pages = {101168},
-    year = {2022},
-    doi = {10.1016/j.softx.2022.101168},
-}
-
-@article{Gharti2023,
-    author = {Gharti, Hom Nath and Eaton, Will and Tromp, Jeroen},
-    title = "{Spectral-infinite-element simulations of seismic wave propagation in self-gravitating, rotating 3-D Earth models}",
-    journal = {Geophysical Journal International},
-    volume = {235},
-    number = {3},
-    pages = {2671-2693},
-    year = {2023},
-    month = {10},
-    doi = {10.1093/gji/ggad382},
-}
-
-
-
-
-
-@article{Hawkins2023,
-    author = {Hawkins, R and Khalid, M H and Smetana, K and Trampert, J},
-    title = "{Model order reduction for seismic waveform modelling: inspiration from normal modes}",
-    journal = {Geophysical Journal International},
-    volume = {234},
-    number = {3},
-    pages = {2255-2283},
-    year = {2023},
-    month = {05},
-    doi = {10.1093/gji/ggad195},
-}
-
-@article{Sawade2024,
-    author = {Sawade, Lucas and Ekstr\"{o}m, G\"{o}ran and Peter, Daniel and Ding, Liang and Nettles, Meredith and Tromp, Jeroen},
-    title = {{Parsimonious Green Function Databases for Centroid Moment Tensor Inversion}},
-    journal = {"Manuscript in prep"},
-    year = {2024},
-    volume = {}
-}
-
-@article{Thompson2022,
-    title = {LAMMPS - a flexible simulation tool for particle-based materials modeling at the atomic, meso, and continuum scales},
-    journal = {Computer Physics Communications},
-    volume = {271},
-    pages = {108171},
-    year = {2022},
-    issn = {0010-4655},
-    doi = {10.1016/j.cpc.2021.108171},
-    author = {Aidan P. Thompson and H. Metin Aktulga and Richard Berger and Dan S. Bolintineanu and W. Michael Brown and Paul S. Crozier and Pieter J. {in 't Veld} and Axel Kohlmeyer and Stan G. Moore and Trung Dac Nguyen and Ray Shan and Mark J. Stevens and Julien Tranchida and Christian Trott and Steven J. Plimpton},
-}
-
+@article{Abdelfattah2021,
+    author = {Abdelfattah, Ahmad and Barra, Valeria and Beams, Natalie and Brown, Jed and Camier, Jean-Sylvain and Dobrev, Veselin and Dudouit, Yohann and Ghaffari, Leila and Kolev, Tzanio and Medina, David and Pazner, Will and Ratnayaka, Thilina and Thompson, Jeremy L and Tomov, Stanimire},
+    title  = {libCEED User Manual}, month = JUL, year = 2021,
+    publisher = {Zenodo}, version = {0.9.0}, doi = {10.5281/zenodo.5077489}}
 
 @article{Tromp2019,
     author = {Tromp, Jeroen and Bachmann, Etienne},
     title = "{Source encoding for adjoint tomography}",
     journal = {Geophysical Journal International},
-    volume = {218},
-    number = {3},
-    pages = {2019-2044},
-    year = {2019},
-    month = {06},
-    doi = {10.1093/gji/ggz271},
-}
+    volume = {218}, number = {3}, pages = {2019-2044}, year = {2019},
+    month = {06}, doi = {10.1093/gji/ggz271}}
 
+@article{Bachmann2020,
+    author = {Bachmann, Etienne and Tromp, Jeroen},
+    title = "{Source encoding for viscoacoustic ultrasound computed tomography}",
+    journal = {The Journal of the Acoustical Society of America},
+    volume = {147}, number = {5}, pages = {3221-3235}, year = {2020},
+    month = {05}, doi = {10.1121/10.0001191}}
 
-@article{Stone2020,
-    doi = {10.3847/1538-4365/ab929b},
-    year = {2020},
-    month = {jun},
-    publisher = {The American Astronomical Society},
-    volume = {249},
-    number = {1},
-    pages = {4},
-    author = {James M. Stone and Kengo Tomida and Christopher J. White and Kyle G. Felker},
-    title = {The Athena++ Adaptive Mesh Refinement Framework: Design and Magnetohydrodynamic Solvers},
-    journal = {The Astrophysical Journal Supplement         Series},
-}
+@article{Cui2023,
+    author = {Cui, Congyue and Bachmann, Etienne and Peter, Daniel and Liu, Zhaolun and Tromp, Jeroen},
+    title = "{Source-encoded waveform inversion in the Northern Hemisphere}",
+    journal = {Geophysical Journal International},
+    volume = {235}, number = {3}, pages = {2305-2322}, year = {2023},
+    month = {09}, doi = {10.1093/gji/ggad363}}
 
-@article{Trott2022,
-  author={Trott, Christian R. and Lebrun-Grandié, Damien and Arndt, Daniel and Ciesko, Jan and Dang, Vinh and Ellingwood, Nathan and Gayatri, Rahulkumar and Harvey, Evan and Hollman, Daisy S. and Ibanez, Dan and Liber, Nevin and Madsen, Jonathan and Miles, Jeff and Poliakoff, David and Powell, Amy and Rajamanickam, Sivasankaran and Simberg, Mikael and Sunderland, Dan and Turcksin, Bruno and Wilke, Jeremiah},
-  journal={IEEE Transactions on Parallel and Distributed Systems},
-  title={Kokkos 3: Programming Model Extensions for the Exascale Era},
-  year={2022},
-  volume={33},
-  number={4},
-  pages={805-817},
-  doi={10.1109/TPDS.2021.3097283}}
+@article{Sawade2024,
+    author = {Sawade, Lucas and Ekstr\"{o}m, G\"{o}ran and Peter, Daniel and Ding, Liang and Nettles, Meredith and Tromp, Jeroen},
+    title = {{Parsimonious Green Function Databases for Centroid Moment Tensor Inversion}},
+    journal = {Manuscript in prep}, year = {2024}, volume = {}}
 
-@ARTICLE{Grete2021,
-  author={Grete, Philipp and Glines, Forrest W. and O'Shea, Brian W.},
-  journal={IEEE Transactions on Parallel and Distributed Systems}, 
-  title={K-Athena: A Performance Portable Structured Grid Finite Volume Magnetohydrodynamics Code}, 
-  year={2021},
-  volume={32},
-  number={1},
-  pages={85-97},
-  keywords={Magnetohydrodynamics;Computer architecture;Graphics processing units;Message systems;Programming;C++ languages;Kernel;D.2.8.b performance measures;D.3.2.d concurrent, distributed and parallel languages;I.6.8.h parallel;J.2.i physics;J.2.c astronomy},
-  doi={10.1109/TPDS.2020.3010016}}
+@article{Gharti2023,
+    author = {Gharti, Hom Nath and Eaton, Will and Tromp, Jeroen},
+    title = "{Spectral-infinite-element simulations of seismic wave propagation in self-gravitating, rotating 3-D Earth models}",
+    journal = {Geophysical Journal International},
+    volume = {235}, number = {3}, pages = {2671-2693}, year = {2023},
+    month = {10}, doi = {10.1093/gji/ggad382}}
+
+@article{Hawkins2023,
+    author = {Hawkins, R and Khalid, M H and Smetana, K and Trampert, J},
+    title = "{Model order reduction for seismic waveform modelling: inspiration from normal modes}",
+    journal = {Geophysical Journal International},
+    volume = {234}, number = {3}, pages = {2255-2283}, year = {2023},
+    month = {05}, doi = {10.1093/gji/ggad195}}
+
+@article{Boehm2016,
+    volume = {81}, number = {6}, month = {nov}, year = {2016},
+    author = {Boehm, Christian and Hanzich, Mauricio and Puente, Josep de la and Fichtner, Andreas},
+    title = {Wavefield compression for adjoint methods in full-waveform inversion},
+    journal = {GEOPHYSICS}, doi = {10.1190/geo2015-0653.1}}
+
+@article{Thompson2022,
+    title = {LAMMPS - a flexible simulation tool for particle-based materials modeling at the atomic, meso, and continuum scales},
+    journal = {Computer Physics Communications},
+    volume = {271}, pages = {108171}, year = {2022}, issn = {0010-4655},
+    doi = {10.1016/j.cpc.2021.108171},
+    author = {Aidan P. Thompson and H. Metin Aktulga and Richard Berger and Dan S. Bolintineanu and W. Michael Brown and Paul S. Crozier and Pieter J. {in 't Veld} and Axel Kohlmeyer and Stan G. Moore and Trung Dac Nguyen and Ray Shan and Mark J. Stevens and Julien Tranchida and Christian Trott and Steven J. Plimpton}}

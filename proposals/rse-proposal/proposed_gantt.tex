@@ -1,0 +1,80 @@
+% Proposed GANTT chart for the AY27 SPECFEM++ RSE renewal (2027-2029).
+% Drop-in for the proposal. Compile standalone to preview, or move the
+% ganttchart environment into a figure in main.tex (needs \usepackage{pgfgantt}).
+%
+% Months are 1..24 = Jul 2027 .. Jun 2029.  Milestones M0..M4.
+% NOTE: parity + near-native performance + baseline docs + DG-Cartesian are
+% AY26-27 work, DELIVERED BEFORE the award starts (milestone M0 baseline).
+\documentclass[border=8pt]{standalone}
+\usepackage{pgfgantt}
+\usepackage[dvipsnames]{xcolor}
+
+\definecolor{RSEone}{HTML}{2C6FBB} % RSE-1 : frequency solver
+\definecolor{RSEtwo}{HTML}{E07B1A} % RSE-2 : global-scale physics / maintenance
+\definecolor{RSEsh}{HTML}{2E8B57}  % shared
+\definecolor{RSEst}{HTML}{9AA0A6}  % stretch
+\definecolor{MScol}{HTML}{C0392B}  % milestones
+
+\begin{document}
+\begin{ganttchart}[
+    hgrid, vgrid={*2{draw=none}, *1{draw=gray!30}},
+    x unit=0.44cm,
+    y unit title=0.52cm,
+    y unit chart=0.52cm,
+    title height=1,
+    bar height=0.6,
+    bar top shift=0.2,
+    group height=0.5,
+    group top shift=0.25,
+    bar label font=\footnotesize,
+    group label font=\footnotesize\bfseries,
+    title label font=\footnotesize\bfseries,
+    milestone label font=\scriptsize\bfseries,
+    milestone/.append style={fill=MScol, draw=MScol!70!black},
+    bar/.append style={draw=none, rounded corners=1pt},
+  ]{1}{24}
+
+  % ---- time axis ----
+  \gantttitle{Year 1 \textperiodcentered\ 2027--28}{12}
+  \gantttitle{Year 2 \textperiodcentered\ 2028--29}{12} \\
+  \gantttitle{Jul'27}{3}\gantttitle{Oct'27}{3}\gantttitle{Jan'28}{3}\gantttitle{Apr'28}{3}%
+  \gantttitle{Jul'28}{3}\gantttitle{Oct'28}{3}\gantttitle{Jan'29}{3}\gantttitle{Apr'29}{3} \\
+
+  % ---- milestones (aligned to deliverable completions) ----
+  \ganttmilestone{M0}{1}\ganttmilestone{M1}{8}\ganttmilestone{M2}{13}%
+  \ganttmilestone{M3}{18}\ganttmilestone{M4}{24} \\
+
+  % ---- D1 : Frequency-domain solver (RSE-1) ----
+  \ganttgroup{D1 \textperiodcentered\ Frequency-domain solver (RSE-1)}{1}{21} \\
+  \ganttbar[bar/.append style={fill=RSEone}]{Frequency-domain formulation \& core solver}{1}{8} \\
+  \ganttbar[bar/.append style={fill=RSEone}]{Verification vs.\ analytic \& normal-mode benchmarks}{7}{13} \\
+  \ganttbar[bar/.append style={fill=RSEone}]{Adjoint/inversion coupling + hardening}{13}{18} \\
+  \ganttbar[bar/.append style={fill=RSEone}]{Release + documentation of new capability}{19}{24} \\
+
+  % ---- D2 : Global-scale physics & maintenance (RSE-2) ----
+  \ganttgroup{D2 \textperiodcentered\ Global-scale physics \& maintenance (RSE-2)}{1}{24} \\
+  \ganttbar[bar/.append style={fill=RSEtwo}]{DG for globe (extend Cartesian DG to global scale)}{3}{13} \\
+  \ganttbar[bar/.append style={fill=RSEtwo!55}]{3D/global maintenance: fixes, Kokkos \& perf upkeep}{1}{24} \\
+  \ganttbar[bar/.append style={fill=RSEtwo!55}]{Regression-benchmark \& CI upkeep}{1}{24} \\
+
+  % ---- D3 : New physics with scientists & adoption (shared) ----
+  \ganttgroup{D3 \textperiodcentered\ New physics with scientists \& adoption (shared)}{1}{24} \\
+  \ganttbar[bar/.append style={fill=RSEsh}]{RSE partnership: new physics (Cosserat, couplings)}{3}{22} \\
+  \ganttbar[bar/.append style={fill=RSEsh}]{Advanced tutorials / workshops / onboarding}{10}{11} \\
+  \ganttbar[bar/.append style={fill=RSEsh}]{}{21}{22} \\
+  \ganttbar[bar/.append style={fill=RSEsh!55}]{Release engineering (v0.7 $\to$ v1.0)}{1}{24} \\
+  \ganttbar[bar/.append style={fill=RSEsh}]{Transition to community maintenance}{15}{24} \\
+
+  % ---- Stretch ----
+  \ganttgroup{Stretch \textperiodcentered\ candidate new physics (Year 2)}{16}{24} \\
+  \ganttbar[bar/.append style={fill=RSEst!45, draw=RSEst, dashed}]{MOR / compression / couplings / auto mesh-layer}{16}{24} \\
+
+\end{ganttchart}
+%
+% Milestones (each aligned to a deliverable completion / bar end):
+%  M0 (start)  Baseline from AY26-27: GLOBE parity + near-native perf + DG-Cartesian
+%  M1 (mo. 8)  Frequency-domain core solver complete -> v0.8
+%  M2 (mo. 13) DG-for-globe delivered & frequency solver verified -> v0.9
+%  M3 (mo. 18) Frequency solver in production (adjoint/inversion)
+%  M4 (mo. 24) v1.0 release + community-maintenance handoff
+\end{document}
